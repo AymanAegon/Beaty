@@ -1,0 +1,13 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="home-container">
+    <div class="beats-list home-section">
+        {% include 'base/beats-list.html' %}
+    </div>
+    <div class="beat home-section">
+        <h2>{{request.user}}</h2>
+    </div>
+</div>
+
+{% endblock %}

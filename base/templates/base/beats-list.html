@@ -1,0 +1,7 @@
+<h2>My beats</h2>
+<h4><a href="{% url 'create' %}">Create a Beat</a></h4>
+{% for beat in beats %}
+    <div>
+        <a href="{% url 'beat' beat.id %}">{{beat.name}}</a>
+    </div>
+{% endfor %}

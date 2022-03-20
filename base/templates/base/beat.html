@@ -1,0 +1,37 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="home-container">
+    <div class="beats-list home-section">
+        {% include 'base/beats-list.html' %}
+    </div>
+    <div class="beat home-section">
+        <h2>{{beat.name}}</h2>
+        {% if beat %}
+        <small>Created by @{{beat.creater}}</small>
+        {% if request.user == beat.creater %}
+        <a href="{% url 'delete-beat' beat.id %}">delete</a>
+        {% endif %}
+        <hr>
+        {% endif %}
+        {% for msg in chat %}
+            <div>
+                <small>@{{msg.user}} {{msg.created|timesince}} ago</small>
+                <p>{{msg.body}}</p>
+            </div>
+        {% endfor %}
+        {%  if request.user.is_authenticated %}
+            <div class="comment-form">
+                <form method="post" class="input-group mb-3">
+                    {% csrf_token %}
+                    <input type="text" class="form-control" placeholder="Write your message here.." aria-label="Write a message" name="body">
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Send</button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock %}
