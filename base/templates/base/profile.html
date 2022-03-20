@@ -7,6 +7,18 @@
     </div>
     <div class="beat home-section">
         <h2>{{request.user}}</h2>
+        <form method="post">
+            <h6>Your name</h6>
+            <div>{{request.user.first_name}}  {{request.user.last_name}}</div>
+            {% csrf_token %}
+            <input type="text" name="firstName" value="{{request.user.first_name}}" placeholder="First name">
+            <input type="text" name="lastName" value="{{request.user.last_name}}" placeholder="Last name">
+            <input type="submit" value="Change">
+        <h6>Bio</h6>
+        <p>{{request.user.bio}}</p>
+            <input type="text" name="bio" value="{{request.user.bio}}" placeholder="Bio">
+            <input type="submit" value="Change">
+        </form>
     </div>
 </div>
 

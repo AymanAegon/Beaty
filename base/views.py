@@ -99,9 +99,16 @@ def deleteBeat(request, pk):
     context = {'beat': beat}
     return render(request, 'base/delete-beat.html', context)
 
+@login_required(login_url='login')
 def profile(request):
-
     beats = Beat.objects.all()
+    if request.method == 'POST':
+        user = request.user
+        user.first_name = request.POST.get('firstName')
+        user.last_name = request.POST.get('lastName')
+        user.bio = request.POST.get('bio')
+        user.save()
+        return redirect('home')
+        
     context = {'beats': beats}
-
     return render(request, 'base/profile.html', context)

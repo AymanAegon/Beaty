@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     email = models.EmailField(unique=True, null=False)
-    bio = models.TextField(null=True)
+    bio = models.TextField(default="")
     birthday=models.DateField(auto_now=False, null=True, blank=True)
 
     USERNAME_FIELD = 'email'
