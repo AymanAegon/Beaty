@@ -1,9 +1,9 @@
 from datetime import datetime
-from pyexpat import model
 from django.shortcuts import render, redirect
 from .models import Beat, Message, User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.db.models import Q
 from .forms import MyUserCreationForm, BeatForm
 from django.contrib.auth.decorators import login_required
 
@@ -52,10 +52,13 @@ def signupPage(request):
     return render(request, 'base/signup.html', context)
 
 def home(request):
-    beats = Beat.objects.all()
-    context = {'beats': beats}
-
-        
+    search = request.GET.get('search') if request.GET.get('search') else ''
+    beats = Beat.objects.filter(
+        Q(name__icontains=search) |
+        Q(creater__username__icontains=search) |
+        Q(description__icontains=search)
+        )
+    context = {'beats': beats, 'search': search}
 
     return render(request, 'base/home.html', context)
 
@@ -98,6 +101,17 @@ def deleteBeat(request, pk):
         return redirect('home')
     context = {'beat': beat}
     return render(request, 'base/delete-beat.html', context)
+
+@login_required(login_url='login')
+def deleteMsg(request, pk):
+    msg = Message.objects.get(id=pk)
+    if request.user != msg.user:
+        return redirect('home')
+    if request.method == 'POST':
+        msg.delete()
+        return redirect('home')
+    context = {'msg': msg}
+    return render(request, 'base/delete-msg.html', context)
 
 @login_required(login_url='login')
 def profile(request):

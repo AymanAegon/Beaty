@@ -1,5 +1,9 @@
 <h2>My beats</h2>
 <h4><a href="{% url 'create' %}">Create a Beat</a></h4>
+<form class="d-flex" method="get" action="{% url 'home' %}">
+    <input class="form-control me-2" type="search" placeholder="Search" name="search" value="{{search}}">
+    <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
 {% for beat in beats %}
     <div>
         <a href="{% url 'beat' beat.id %}">{{beat.name}}</a>

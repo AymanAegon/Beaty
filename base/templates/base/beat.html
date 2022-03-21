@@ -17,7 +17,7 @@
         {% endif %}
         {% for msg in chat %}
             <div>
-                <small>@{{msg.user}} {{msg.created|timesince}} ago</small>
+                <small>@{{msg.user}} {{msg.created|timesince}} ago <a href="{% url 'delete-msg' msg.id %}">delete</a></small>
                 <p>{{msg.body}}</p>
             </div>
         {% endfor %}
