@@ -6,19 +6,25 @@
         {% include 'base/beats-list.html' %}
     </div>
     <div class="beat home-section">
-        <h2>{{request.user}}</h2>
+        <h2>@{{user}}</h2>
+        {% if request.user == user %}
         <form method="post">
             <h6>Your name</h6>
-            <div>{{request.user.first_name}}  {{request.user.last_name}}</div>
+            <div>{{user.first_name}}  {{user.last_name}}</div>
             {% csrf_token %}
             <input type="text" name="firstName" value="{{request.user.first_name}}" placeholder="First name">
             <input type="text" name="lastName" value="{{request.user.last_name}}" placeholder="Last name">
             <input type="submit" value="Change">
         <h6>Bio</h6>
-        <p>{{request.user.bio}}</p>
+        <p>{{user.bio}}</p>
             <input type="text" name="bio" value="{{request.user.bio}}" placeholder="Bio">
             <input type="submit" value="Change">
         </form>
+        {% else %}
+        <h5>{{user.first_name}}  {{user.last_name}}</h5>
+        <h6>Bio</h6>
+        <p>{{user.bio}}</p>
+        {% endif %}
     </div>
 </div>
 

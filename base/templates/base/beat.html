@@ -7,12 +7,9 @@
         {% include 'base/beats-list.html' %}
     </div>
     <div class="beat home-section">
-        <h2>{{beat.name}}</h2>
+        <h2><a href="{% url 'beat-info' beat.id %}">{{beat.name}}</a></h2>
         {% if beat %}
-        <small>Created by @{{beat.creater}}</small>
-        {% if request.user == beat.creater %}
-        <a href="{% url 'delete-beat' beat.id %}">delete</a>
-        {% endif %}
+        <small>Created by <a href="{% url 'profile' beat.creater %}">@{{beat.creater}}</a></small>
         <hr>
         {% endif %}
         {% for msg in chat %}

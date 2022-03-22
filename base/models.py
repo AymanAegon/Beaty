@@ -13,10 +13,10 @@ class User(AbstractUser):
 
 
 class Beat(models.Model):
-    creater = models.ForeignKey(User, on_delete=models.CASCADE)
+    creater = models.ForeignKey(User, on_delete=models.CASCADE, related_name='creater')
     name = models.CharField(max_length=200)
-    description = models.TextField(null=True, blank=True)
-    members = models.ManyToManyField(User, related_name='members', blank=True)
+    description = models.TextField(default="")
+    members = models.ManyToManyField(User, blank=True)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -30,6 +30,7 @@ class Message(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     beat = models.ForeignKey(Beat, on_delete=models.CASCADE)
     body = models.TextField()
+    action = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
     
     class Meta:

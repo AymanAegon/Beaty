@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="home-container">
+    <div class="beats-list home-section">
+        {% include 'base/beats-list.html' %}
+    </div>
+    <div class="beat home-section">
+        <h2>{{beat}}</h2>
+        <form method="post">
+            <h6>Edit beat name</h6>
+            {% csrf_token %}
+            <input type="text" name="name" value="{{beat}}" placeholder="Beat name">
+            <input type="submit" value="Change">
+        <h6>Edit description</h6>
+            <input type="text" name="desc" value="{{beat.description}}" placeholder="Description">
+            <input type="submit" value="Change">
+        </form>
+    </div>
+</div>
+
+{% endblock %}
