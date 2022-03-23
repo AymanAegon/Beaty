@@ -14,8 +14,12 @@
         {% endif %}
         {% for msg in chat %}
             <div>
-                <small>@{{msg.user}} {{msg.created|timesince}} ago <a href="{% url 'delete-msg' msg.id %}">delete</a></small>
+                {% if msg.action %}
+                <h6>{{msg.body}}</h6>
+                {% else %}
+                <small>@{{msg.user}} {{msg.created|timesince}} ago {% if msg.user == request.user %}<a href="{% url 'delete-msg' msg.id %}">delete</a>{% endif %}</small>
                 <p>{{msg.body}}</p>
+                {% endif %}
             </div>
         {% endfor %}
         {%  if request.user.is_authenticated %}

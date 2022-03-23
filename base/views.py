@@ -4,7 +4,7 @@ from .models import Beat, Message, User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.db.models import Q
-from .forms import MyUserCreationForm, BeatForm
+from .forms import MyUserCreationForm
 from django.contrib.auth.decorators import login_required
 
 
@@ -112,6 +112,14 @@ def joinBeat(request, pk):
     beat = Beat.objects.get(id=pk)
     if request.method == 'POST':
         beat.members.add(request.user)
+        mes = Message.objects.create(
+            user = request.user,
+            beat = beat,
+            body = "@"+str(request.user)+" joined beat",
+            action = True
+        )
+        beat.updated = datetime.now()
+        beat.save()
         return redirect('beat', pk=beat.id)
 
     context={'beat': beat, 'beats': beats}
@@ -168,6 +176,12 @@ def editBeat(request, pk):
         beat.name = request.POST['name']
         beat.description = request.POST['desc']
         beat.save()
+        mes = Message.objects.create(
+            user = request.user,
+            beat = beat,
+            body = "@"+str(request.user)+" edit beat",
+            action = True
+        )
         return redirect('beat', pk=beat.id)
     context = {'beat': beat, 'beats': beats}
     return render(request, 'base/edit-beat.html', context)

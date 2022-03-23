@@ -22,8 +22,10 @@
         </form>
         {% else %}
         <h5>{{user.first_name}}  {{user.last_name}}</h5>
+        {% if user.bio != '' %}
         <h6>Bio</h6>
         <p>{{user.bio}}</p>
+        {% endif %}
         {% endif %}
     </div>
 </div>
