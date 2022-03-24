@@ -38,6 +38,7 @@ def signupPage(request):
     if request.user.is_authenticated:
         return redirect('home')
     form = MyUserCreationForm()
+    arr = ["name","name","name","email","pass","re_pass"]
     if request.method == 'POST':
         form = MyUserCreationForm(request.POST)
         if form.is_valid():
@@ -48,7 +49,7 @@ def signupPage(request):
             return redirect('home')
         else:
             messages.error(request, 'Oops, try again')
-    context = {'form': form}
+    context = {'form': form, 'arr':arr}
     return render(request, 'base/signup.html', context)
 
 @login_required(login_url='login')
