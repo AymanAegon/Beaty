@@ -4,7 +4,7 @@ from .models import Beat, Message, User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.db.models import Q
-from .forms import MyUserCreationForm
+from .forms import MyUserCreationForm, EditUser
 from django.contrib.auth.decorators import login_required
 
 
@@ -38,7 +38,6 @@ def signupPage(request):
     if request.user.is_authenticated:
         return redirect('home')
     form = MyUserCreationForm()
-    arr = ["name","name","name","email","pass","re_pass"]
     if request.method == 'POST':
         form = MyUserCreationForm(request.POST)
         if form.is_valid():
@@ -47,9 +46,8 @@ def signupPage(request):
             user.save()
             login(request, user)
             return redirect('home')
-        else:
-            messages.error(request, 'Oops, try again')
-    context = {'form': form, 'arr':arr}
+            
+    context = {'form': form}
     return render(request, 'base/signup.html', context)
 
 @login_required(login_url='login')
@@ -60,6 +58,8 @@ def home(request):
         Q(creater__username__icontains=search) |
         Q(description__icontains=search)
         )
+    if len(beats)==0:
+        beats=None
     context = {'beats': beats, 'search': search}
     return render(request, 'base/home.html', context)
 
@@ -71,7 +71,13 @@ def beat(request, pk):
         Q(creater__username__icontains=search) |
         Q(description__icontains=search)
         )
-    beat = Beat.objects.get(id=pk)
+    if len(beats)==0:
+        beats=None
+    try:
+        beat = Beat.objects.get(id=pk)
+    except Beat.DoesNotExist:
+        return redirect('home')
+    
     user = beat.members.filter(id=request.user.id)
     if len(user)==0:
         return redirect('join-beat', pk=beat.id)
@@ -97,6 +103,8 @@ def beatInfo(request, pk):
         Q(creater__username__icontains=search) |
         Q(description__icontains=search)
         )
+    if len(beats)==0:
+        beats=None
     beat = Beat.objects.get(id=pk)
     members = beat.members.all()
     context = {'beat': beat, 'beats': beats, 'members': members}
@@ -110,6 +118,8 @@ def joinBeat(request, pk):
         Q(creater__username__icontains=search) |
         Q(description__icontains=search)
         )
+    if len(beats)==0:
+        beats=None
     beat = Beat.objects.get(id=pk)
     if request.method == 'POST':
         beat.members.add(request.user)
@@ -133,6 +143,12 @@ def exitBeat(request, pk):
         return redirect('home')
     if request.method == 'POST':
         beat.members.remove(request.user)
+        mes = Message.objects.create(
+            user = request.user,
+            beat = beat,
+            body = "@"+str(request.user)+" exit beat",
+            action = True
+        )
         # request.user.beat_set.remove(beat)
         return redirect('home')
 
@@ -170,6 +186,8 @@ def editBeat(request, pk):
         Q(creater__username__icontains=search) |
         Q(description__icontains=search)
         )
+    if len(beats)==0:
+        beats=None
     beat = Beat.objects.get(id=pk)
     if request.user != beat.creater:
         return redirect('home')
@@ -194,7 +212,7 @@ def deleteMsg(request, pk):
         return redirect('home')
     if request.method == 'POST':
         msg.delete()
-        return redirect('home')
+        return redirect('beat', pk=msg.beat.id)
     context = {'msg': msg}
     return render(request, 'base/delete-msg.html', context)
 
@@ -206,14 +224,18 @@ def profile(request, un):
         Q(creater__username__icontains=search) |
         Q(description__icontains=search)
         )
+    if len(beats)==0:
+        beats=None
     user = User.objects.get(username=un)
+    form = EditUser(instance=user)
     if request.method == 'POST':
-        user = request.user
-        user.first_name = request.POST.get('firstName')
-        user.last_name = request.POST.get('lastName')
-        user.bio = request.POST.get('bio')
-        user.save()
-        return redirect('profile',user)
+        form = EditUser(request.POST, request.FILES, instance=user)
+
+        if form.is_valid():
+            
+            form.save()
+            return redirect('profile',user)
+
         
-    context = {'beats': beats, 'user': user}
+    context = {'beats': beats, 'user': user, 'form':form}
     return render(request, 'base/profile.html', context)

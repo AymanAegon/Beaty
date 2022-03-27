@@ -1,9 +1,11 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
     email = models.EmailField(unique=True, null=False)
-    bio = models.TextField(default="")
+    bio = models.CharField(max_length=300, default="")
+    profile_img = models.ImageField(null=True, upload_to="images/")
     birthday=models.DateField(auto_now=False, null=True, blank=True)
 
     USERNAME_FIELD = 'email'

@@ -14,7 +14,7 @@
                     <div class="form-group">
                         <label for="{{i.name}}" id="{{i.name}}"></label>
                         {{i}}
-                        <!-- help_text -->
+                        {{i.errors}}
                     </div>
                     {% endfor %}
 
@@ -29,9 +29,6 @@
             </div>
         </div>
     </div>
+    
 </section>
-<script>
-    document.forms["register-form"].elements[5].placeholder = "Password";
-    document.forms["register-form"].elements[6].placeholder = "Repeat your password";
-</script>
 {% endblock %}

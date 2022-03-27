@@ -1,0 +1,11 @@
+.profile-page-img{
+	max-width: 20%;
+}
+
+.home-container{
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+.home-section{
+    border: 1px solid black;
+}
