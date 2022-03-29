@@ -1,0 +1,27 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="home-container">
+    <div class="beats-list home-section">
+        {% include 'base/beats-list.html' %}
+    </div>
+    <div class="beat home-section">
+        <h2>{{beat}}</h2>
+        <h5>Created by <a href="{% url 'profile' beat.creater %}">@{{beat.creater}}</a></h5>
+        <hr>
+        <h5>Description</h5>
+        <p>{{beat.description}}</p>
+        <h5>Members</h5>
+        {% for m in members %}
+            <a href="{% url 'profile' m %}">@{{m}}</a><br>
+        {% endfor %}
+        {% if request.user == beat.creater %}
+        <a href="{% url 'edit-beat' beat.id %}">edit</a>
+        <a href="{% url 'delete-beat' beat.id %}">delete</a>
+        {% else %}
+        <a href="{% url 'exit-beat' beat.id %}">exit</a>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

@@ -2,42 +2,47 @@
 
 {% block content %}
 {% load static %}
-<div class="home-container">
-    <div class="beats-list home-section">
+
+  <main class="profile-page layout layout--3">
+    <div class="container">
+      <!-- Topics Start -->
         {% include 'base/beats-list.html' %}
+      <!-- Topics End -->
+
+      <!-- Room List Start -->
+      <div class="roomList">
+        <div class="profile">
+          <div class="profile__avatar">
+            <div class="avatar avatar--large active">
+              {% if not user.profile_img %}
+                  <img src="{% static 'images/avatar.svg' %}" alt="avatar">
+              {% else %}
+                  <img src="{{user.profile_img.url}}" alt="avatar">
+              {% endif %}
+            </div>
+          </div>
+          <div class="profile__info">
+            <h3>{{user.first_name}}  {{user.last_name}}</h3>
+            <p>@{{user}}</p>
+            {% if request.user == user %}
+            <a href="edit-user.html" class="btn btn--main btn--pill">Edit Profile</a>
+            {% endif %}
+          </div>
+          {% if user.bio != '' %}
+          <div class="profile__about">
+            <h3>Bio</h3>
+            <p>
+              {{user.bio}}
+            </p>
+          </div>
+          {% endif %}
+        </div>
+
+      </div>
+      <!-- Room List End -->
+
     </div>
-    <div class="beat home-section">
-        {% if not user.profile_img %}
-            <img src="{% static 'images/avatar.svg' %}" class="profile-page-img" alt="avatar">
-        {% else %}
-            <img src="{{user.profile_img.url}}" class="profile-page-img" alt="avatar">
-        {% endif %}
-        {% if request.user == user %}
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{form.profile_img}}
-        <h2>@{{user}}</h2>
-            <h6>Your name</h6>
-            <div>{{user.first_name}}  {{user.last_name}}</div>
-            {{form.first_name}}
-            {{form.last_name}}
-            <!-- <input type="text" name="firstName" value="{{request.user.first_name}}" placeholder="First name">
-            <input type="text" name="lastName" value="{{request.user.last_name}}" placeholder="Last name"> -->
-            <input type="submit" value="Change">
-        <h6>Bio</h6>
-        <p>{{user.bio}}</p>
-            {{form.bio}}
-            <!-- <input type="text" name="bio" value="{{request.user.bio}}" placeholder="Bio"> -->
-            <input type="submit" value="Change">
-        </form>
-        {% else %}
-        <h5>{{user.first_name}}  {{user.last_name}}</h5>
-        {% if user.bio != '' %}
-        <h6>Bio</h6>
-        <p>{{user.bio}}</p>
-        {% endif %}
-        {% endif %}
-    </div>
-</div>
+  </main>
+
 
 {% endblock %}

@@ -1,17 +1,19 @@
-<h2>My beats</h2>
-<h4><a href="{% url 'create' %}">Create a Beat</a></h4>
-<form class="d-flex" method="get" action="{% url 'home' %}">
-    <input class="form-control me-2" type="search" placeholder="Search" name="search" value="{{search}}">
-    <button class="btn btn-outline-success" type="submit">Search</button>
-</form>
-{% if beats %}
-{% for beat in beats %}
-    <div>
-        <a href="{% url 'beat' beat.id %}">{{beat.name}}</a>
+<div class="topics">
+    <div class="topics__header">
+        <h2>Your Beats</h2>
     </div>
-{% endfor %}
-{% else %}
+    {% if beats %}
+    <ul class="topics__list">
+        {% for beat in beats %}
+        <li>
+        <a href="{% url 'beat' beat.id %}">{{beat.name}}<!--<span>3</span>--></a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
 	<div>
 		<i>No beats..</i>
 	</div>
-{% endif %}
+    {% endif %}
+
+</div>
