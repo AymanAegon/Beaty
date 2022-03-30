@@ -9,7 +9,6 @@ urlpatterns = [
     path('create/', views.create, name='create'),
     path('join/<str:pk>/', views.joinBeat, name='join-beat'),
     path('exit/<str:pk>/', views.exitBeat, name='exit-beat'),
-    path('delete/<str:pk>/', views.deleteBeat, name='delete-beat'),
     path('edit/<str:pk>/', views.editBeat, name='edit-beat'),
     path('delete-msg/<str:pk>/', views.deleteMsg, name='delete-msg'),
     path('login/', views.loginPage, name='login'),

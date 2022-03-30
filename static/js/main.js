@@ -1,1 +1,7 @@
-document.forms["register-form"].elements[1].placeholder = "Password";
+function openForm() {
+    document.getElementById("popup-confimation").style.display = "block";
+  }
+  
+  function closeForm() {
+    document.getElementById("popup-confimation").style.display = "none";
+  }

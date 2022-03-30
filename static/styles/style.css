@@ -97,6 +97,22 @@ a {
 .btn--main {
   background-color: var(--color-main);
   color: var(--color-dark);
+  width: 100%;
+}
+
+.btn--delete {
+  background-color: var(--color-main);
+  color: var(--color-dark);
+}
+
+.btn--submit {
+  background-color: var(--color-main);
+  color: var(--color-dark);
+}
+
+.btn--submit {
+  background-color: var(--color-main);
+  color: var(--color-dark);
 }
 
 .btn:hover {
@@ -110,6 +126,11 @@ a {
 
 .btn > svg {
   fill: currentColor;
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.btn > .svg-icon {
   width: 1.6rem;
   height: 1.6rem;
 }
@@ -298,6 +319,7 @@ a {
   padding: 1.3rem 1rem;
   display: flex;
   align-items: center;
+  margin-top: 2rem;
   gap: 1rem;
   border-radius: 4px;
 }
@@ -421,7 +443,7 @@ a {
 .layout__box {
   width: 90%;
   max-width: 48rem;
-  min-height: 40rem;
+  min-height: 25rem;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -444,16 +466,19 @@ a {
   align-items: center;
 }
 
+.layout__boxTitle span:hover {
+  cursor: pointer;
+}
+
 .layout__boxTitle h3 {
   text-transform: uppercase;
   font-weight: 500;
   color: var(--color-light);
 }
 
-.layout__boxTitle svg {
+.layout__boxTitle span img {
   width: 1.6rem;
   height: 1.6rem;
-  fill: var(--color-main);
 }
 
 .layout__body {
@@ -953,10 +978,6 @@ a {
   column-gap: 1em;
 }
 
-.room__topRight svg {
-  fill: var(--color-main-light);
-}
-
 .room__header {
   max-height: 30vh;
   overflow-y: auto;
@@ -997,6 +1018,7 @@ a {
 .room__info {
   display: flex;
   justify-content: space-between;
+  margin-left: 2rem;
 }
 
 .room__info h3 {
@@ -1173,4 +1195,17 @@ a {
 .room__options {
   position: absolute;
   bottom: 25px;
+}
+
+.room__options a {
+  margin-left: 2rem;
+}
+
+.delete-div{
+  position: absolute;
+  top: 10rem;
+  left: 20rem;
+  z-index: 10;
+  width: 50rem;
+  height: 50rem;
 }

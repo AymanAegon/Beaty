@@ -1,12 +1,27 @@
-{% extends 'main.html' %}
+{% load static %}
+<div id="popup-confimation" class="delete-div delete-item layout" style="display: none;">
+    <div class="container">
+        <div class="layout__box">
+            <div class="layout__boxHeader">
+                <div class="layout__boxTitle">
+                    <span onclick="closeForm()">
+                        <img src="{% static 'icons/2703079_close_delete_exit_x_icon.svg' %}" alt="Cancel">
+                    </span>
+                </div>
+            </div>
+            <div class="layout__body">
+                <form class="form" method="post">
+                    {% csrf_token %}
+                    <div class="form__group">
+                        <p>Are you sure you want to delete "{{beat}}"?</p>
+                    </div>
 
-{% block content %}
-<form method="post">
-    {% csrf_token %}
-    <p>Are you sure you want to delete "{{beat}}"?</p>
-    <a href="{{ request.META.HTTP_REFERER }}">Go Back</a>
-    <input type="submit" value="Confirm">
-</form>
+                    <div class="for__group">
+                        <input class="btn btn--delete" type="submit" value="Confirm" />
+                    </div>
 
-
-{% endblock %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

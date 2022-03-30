@@ -106,6 +106,9 @@ def beatInfo(request, pk):
     if len(beats)==0:
         beats=None
     beat = Beat.objects.get(id=pk)
+    if request.method=='POST':
+        beat.delete()
+        return redirect('home')
     members = beat.members.all()
     context = {'beat': beat, 'beats': beats, 'members': members}
     return render(request, 'base/beat-info.html', context)
@@ -160,23 +163,13 @@ def create(request):
     
     if request.method == 'POST':
         name = request.POST.get('name')
+        desc = request.POST.get('desc')
         creater = request.user
-        beat = Beat.objects.create(name=name, creater=creater)
+        beat = Beat.objects.create(name=name, creater=creater, description=desc)
         beat.members.add(request.user)
         return redirect('beat', pk=beat.id)
     context = {}
     return render(request, 'base/beat-form.html', context)
-
-@login_required(login_url='login')
-def deleteBeat(request, pk):
-    beat = Beat.objects.get(id=pk)
-    if request.user != beat.creater:
-        return redirect('home')
-    if request.method == 'POST':
-        beat.delete()
-        return redirect('home')
-    context = {'beat': beat}
-    return render(request, 'base/delete-beat.html', context)
 
 @login_required(login_url='login')
 def editBeat(request, pk):

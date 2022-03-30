@@ -1,22 +1,45 @@
 {% extends 'main.html' %}
 
 {% block content %}
-<div class="home-container">
-    <div class="beats-list home-section">
-        {% include 'base/beats-list.html' %}
-    </div>
-    <div class="beat home-section">
-        <h2>{{beat}}</h2>
-        <form method="post">
-            <h6>Edit beat name</h6>
+
+  <main class="create-room layout">
+    <div class="container">
+      <div class="layout__box">
+        <div class="layout__boxHeader">
+          <div class="layout__boxTitle">
+            <a href="{% url 'beat' beat.id %}">
+              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
+                <title>arrow-left</title>
+                <path
+                  d="M13.723 2.286l-13.723 13.714 13.719 13.714 1.616-1.611-10.96-10.96h27.625v-2.286h-27.625l10.965-10.965-1.616-1.607z">
+                </path>
+              </svg>
+            </a>
+            <h3>Edit Beat</h3>
+          </div>
+        </div>
+        <div class="layout__body">
+          <form class="form" method="post">
             {% csrf_token %}
-            <input type="text" name="name" value="{{beat}}" placeholder="Beat name">
-            <input type="submit" value="Change">
-        <h6>Edit description</h6>
-            <input type="text" name="desc" value="{{beat.description}}" placeholder="Description">
-            <input type="submit" value="Change">
-        </form>
+
+            <div class="form__group">
+              <label for="name">Beat Name</label>
+              <input type="text" name="name" required value="{{beat.name}}">
+            </div>
+
+            <div class="form__group">
+              <label for="desc">Room Description</label>
+              <input type="text" name="desc" value="{{beat.description}}" placeholder="Description">
+            </div>
+
+            <div class="form__action">
+              <a class="btn btn--dark" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+              <input class="btn btn--submit" type="submit" value="Submit">
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-</div>
+  </main>
 
 {% endblock %}
