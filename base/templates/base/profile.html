@@ -25,7 +25,7 @@
             <h3>{{user.first_name}}  {{user.last_name}}</h3>
             <p>@{{user}}</p>
             {% if request.user == user %}
-            <a href="edit-user.html" class="btn btn--main btn--pill">Edit Profile</a>
+            <a href="edit-user.html" class="btn btn--pill">Edit Profile</a>
             {% endif %}
           </div>
           {% if user.bio != '' %}

@@ -82,7 +82,14 @@ def beat(request, pk):
     if len(user)==0:
         return redirect('join-beat', pk=beat.id)
     chat = beat.message_set.all()
+
     if request.method == 'POST':
+        if 'delete_msg' in request.POST:
+            i = int(request.POST.get('input_msg_id'))
+            msg = Message.objects.get(id=i)
+            msg.delete()
+            return redirect('beat', pk=msg.beat.id)
+        else:
             mes = Message.objects.create(
                 user = request.user,
                 beat = beat,
