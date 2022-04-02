@@ -4,7 +4,7 @@
 {% load static %}
 
   <main class="profile-page layout layout--3">
-    <div class="container">
+    <div class="container profile">
       <!-- Topics Start -->
         {% include 'base/beats-list.html' %}
       <!-- Topics End -->
@@ -25,7 +25,7 @@
             <h3>{{user.first_name}}  {{user.last_name}}</h3>
             <p>@{{user}}</p>
             {% if request.user == user %}
-            <a href="edit-user.html" class="btn btn--pill">Edit Profile</a>
+            <span onclick="openForm3()" class="btn btn--pill">Edit Profile</span>
             {% endif %}
           </div>
           {% if user.bio != '' %}
@@ -38,10 +38,49 @@
           {% endif %}
         </div>
 
+        <div id="popup-form" class="layout__box" style="display: none;">
+          <div class="layout__boxHeader">
+              <div class="layout__boxTitle">
+                  <span onclick="closeForm3()">
+                    <img src="{% static 'icons/arrow-left.svg' %}" alt="Go back">
+                  </span>
+                  <h3>Edit your profile</h3>
+              </div>
+          </div>
+          {% if request.user == user %}
+          <div class="layout__body">
+              <form class="form" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                  <div class="form__group">
+                      <label for="profile_img">Avatar</label>
+                      {{form.profile_img}}
+                  </div>
+
+                  <div class="form__group">
+                    <label for="first_name">First Name</label>
+                    {{form.first_name}}
+                  </div>
+
+                  <div class="form__group">
+                    <label for="last_name">Last Name</label>
+                    {{form.last_name}}
+                  </div>
+
+                  <div class="form__group">
+                    <label for="bio">Bio</label>
+                    {{form.bio}}
+                  </div>
+                  {{form.error}}
+                  <div class="form__action">
+                      <span class="btn btn--dark" onclick="closeForm3()">Cancel</span>
+                      <button class="btn btn--submit" type="submit">Update</button>
+                  </div>
+              </form>
+          </div>
+          {% endif %}
+        </div>
       </div>
       <!-- Room List End -->
-
-    </div>
   </main>
 
 

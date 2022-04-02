@@ -110,9 +110,11 @@ a {
   color: var(--color-dark);
 }
 
-.btn--submit {
+.btn--login {
   background-color: var(--color-main);
   color: var(--color-dark);
+  position: relative;
+  left: 40%;
 }
 
 .btn:hover {
@@ -444,8 +446,9 @@ a {
 
 .layout__box {
   width: 90%;
-  max-width: 48rem;
+  max-width: 60rem;
   min-height: 25rem;
+  z-index: 200;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -480,6 +483,7 @@ a {
 
 .layout__boxTitle span img {
   width: 1.6rem;
+  margin-top: 3px;
   height: 1.6rem;
 }
 
@@ -506,6 +510,10 @@ a {
   margin-bottom: 2rem;
   width: 100%;
 }
+.form__group_signup {
+  margin-bottom: 2rem;
+  width: 100%;
+}
 
 .form__split {
   display: flex;
@@ -516,6 +524,10 @@ a {
   display: block;
   font-size: 1.5rem;
   margin-bottom: 1rem;
+}
+
+.form__group-signup label {
+  display: block;
 }
 
 .form__group input,
@@ -1222,4 +1234,8 @@ a {
   z-index: 1000;
   width: 50rem;
   height: 50rem;
+}
+
+#profile-edit{
+  z-index: 900;
 }

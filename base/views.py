@@ -228,9 +228,9 @@ def profile(request, un):
         beats=None
     user = User.objects.get(username=un)
     form = EditUser(instance=user)
+    
     if request.method == 'POST':
         form = EditUser(request.POST, request.FILES, instance=user)
-
         if form.is_valid():
             form.save()
             return redirect('profile',user)

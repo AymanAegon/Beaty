@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import User, Beat
 from django.forms import ModelForm
 from django import forms
+from django.db import models
 
 
 class MyUserCreationForm(UserCreationForm):
@@ -24,6 +25,7 @@ class BeatForm(ModelForm):
         fields = ['name']
 
 class EditUser(ModelForm):
+
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'bio', 'profile_img']

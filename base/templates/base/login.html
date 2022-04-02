@@ -3,45 +3,61 @@
 {% block content %}
 {% load static %}
 
-<section class="sign-in">
-    <div class="container">
-        <div class="signin-content">
-            <div class="signin-image">
-                <figure><img src="{% static 'images/signin-image.jpg' %}" alt="sing up image"></figure>
-                <a href="{% url 'signup' %}" class="signup-image-link">Create an account</a>
-            </div>
-
-            <div class="signin-form">
-                <h2 class="form-title">Sign up</h2>
-                <form method="POST" class="register-form" id="login-form">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                        <input type="text" name="email" id="your_name" placeholder="Email"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                        <input type="password" name="password" id="your_pass" placeholder="Password"/>
-                    </div>
-                    <!-- <div class="form-group">
-                        <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
-                        <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
-                    </div> -->
-                    <div class="form-group form-button">
-                        <input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>
-                    </div>
-                </form>
-                <!-- <div class="social-login">
-                    <span class="social-label">Or login with</span>
-                    <ul class="socials">
-                        <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
-                        <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
-                        <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
-                    </ul>
-                </div> -->
-            </div>
+<main class="auth layout">
+  <div class="container">
+    <div class="layout__box">
+      <div class="layout__boxHeader">
+        <div class="layout__boxTitle">
+          <h3>Login</h3>
         </div>
+      </div>
+      <div class="layout__body">
+        <h2 class="auth__tagline">Get in a Beat and chat</h2>
+
+        <form class="form" method="post">
+          {% csrf_token %}
+          <div class="form__group form__group">
+            <label for="room_name">Email</label>
+            <input id="username" name="email" type="text" placeholder="email" />
+          </div>
+          <div class="form__group">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
+            />
+          </div>
+
+          <button class="btn btn--login" type="submit">
+            <svg
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+            >
+              <title>lock</title>
+              <path
+                d="M27 12h-1v-2c0-5.514-4.486-10-10-10s-10 4.486-10 10v2h-1c-0.553 0-1 0.447-1 1v18c0 0.553 0.447 1 1 1h22c0.553 0 1-0.447 1-1v-18c0-0.553-0.447-1-1-1zM8 10c0-4.411 3.589-8 8-8s8 3.589 8 8v2h-16v-2zM26 30h-20v-16h20v16z"
+              ></path>
+              <path
+                d="M15 21.694v4.306h2v-4.306c0.587-0.348 1-0.961 1-1.694 0-1.105-0.895-2-2-2s-2 0.895-2 2c0 0.732 0.413 1.345 1 1.694z"
+              ></path>
+            </svg>
+
+            Login
+          </button>
+        </form>
+
+        <div class="auth__action">
+          <p>Haven't signed up yet?</p>
+          <a href="{% url 'signup' %}" class="btn btn--link">Sign Up</a>
+        </div>
+      </div>
     </div>
-</section>
+  </div>
+</main>
 
 {% endblock %}
