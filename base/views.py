@@ -232,7 +232,6 @@ def profile(request, un):
         form = EditUser(request.POST, request.FILES, instance=user)
 
         if form.is_valid():
-            
             form.save()
             return redirect('profile',user)
 
