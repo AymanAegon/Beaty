@@ -4,7 +4,7 @@ from .models import Beat, Message, User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.db.models import Q
-from .forms import MyUserCreationForm, EditUser
+from .forms import EditBeat, MyUserCreationForm, EditUser
 from django.contrib.auth.decorators import login_required
 
 
@@ -191,18 +191,22 @@ def editBeat(request, pk):
     beat = Beat.objects.get(id=pk)
     if request.user != beat.creater:
         return redirect('home')
+    form = EditBeat(instance=beat)
     if request.method == 'POST':
-        beat.name = request.POST['name']
-        beat.description = request.POST['desc']
-        beat.save()
-        mes = Message.objects.create(
-            user = request.user,
-            beat = beat,
-            body = "@"+str(request.user)+" edit beat",
-            action = True
-        )
-        return redirect('beat', pk=beat.id)
-    context = {'beat': beat, 'beats': beats}
+        form = EditBeat(request.POST, request.FILES, instance=beat)
+        print(form)
+        if form.is_valid():
+            form.save()
+            mes = Message.objects.create(
+                user = request.user,
+                beat = beat,
+                body = "@"+str(request.user)+" edit beat",
+                action = True
+            )
+            return redirect('beat-info', pk=beat.id)
+
+    form = EditBeat(instance=beat)
+    context = {'beat': beat,'form': form, 'beats': beats}
     return render(request, 'base/edit-beat.html', context)
 
 @login_required(login_url='login')

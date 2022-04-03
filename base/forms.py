@@ -29,3 +29,9 @@ class EditUser(ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'bio', 'profile_img']
+
+class EditBeat(ModelForm):
+
+    class Meta:
+        model = Beat
+        fields = ['img', 'name', 'description']

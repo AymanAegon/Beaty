@@ -17,6 +17,7 @@ class User(AbstractUser):
 class Beat(models.Model):
     creater = models.ForeignKey(User, on_delete=models.CASCADE, related_name='creater')
     name = models.CharField(max_length=200)
+    img = models.ImageField(null=True, upload_to="images/")
     description = models.TextField(default="")
     members = models.ManyToManyField(User, blank=True)
     updated = models.DateTimeField(auto_now=True)

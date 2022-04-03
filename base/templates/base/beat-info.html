@@ -35,7 +35,10 @@
                 
             <div class="room__header scroll">
                 <div class="room__info">
-                    <h3><a href="{% url 'beat-info' beat.id %}">{{beat.name}}</a></h3>
+                    <a href="{% url 'beat-info' beat.id %}">
+                        <!-- beat image -->
+                        <h3>{{beat.name}}</h3>
+                    </a>
                     <span>Created by <a href="{% url 'profile' beat.creater %}">@{{beat.creater}}</a></span>
                 </div>
             </div>
@@ -52,7 +55,8 @@
                         <div class="thread__top">
                             <div class="thread__author">
                                 <a href="{% url 'profile' m %}" class="thread__authorInfo">
-                                    <div class="avatar avatar--small">
+                                    {%if m.is_authenticated%}avatar_online{%endif%}
+                                    <div class="avatar avatar--small ">
                                         {% if not m.profile_img %}
                                             <img src="{% static 'images/avatar.svg' %}" alt="avatar">
                                         {% else %}

@@ -1,3 +1,4 @@
+{% load static %}
 <div class="topics">
     <div class="topics__header">
         <a class="btn btn--main" href="{% url 'create' %}">
@@ -27,7 +28,14 @@
     <ul class="topics__list">
         {% for beat in beats %}
         <li>
-        <a href="{% url 'beat' beat.id %}">{{beat.name}}<!--<span>3</span>--></a>
+            <a href="{% url 'beat' beat.id %}">
+                {% if not beat.img %}
+                  <img class="beat_img" src="{% static 'images/avatar.svg' %}" alt="avatar">
+                {% else %}
+                  <img class="beat_img" src="{{beat.img.url}}" alt="avatar">
+                {% endif %}
+                {{beat.name}}<!--<span>3</span>-->
+            </a>
         </li>
         {% endfor %}
     </ul>

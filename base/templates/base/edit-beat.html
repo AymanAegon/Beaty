@@ -19,21 +19,29 @@
           </div>
         </div>
         <div class="layout__body">
-          <form class="form" method="post">
+          <form class="form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
             <div class="form__group">
+              <label for="name">Beat Image</label>
+              {{form.img}}
+              <!-- <input type="file" name="beat_img" accept="image/*"> -->
+            </div>
+
+            <div class="form__group">
               <label for="name">Beat Name</label>
-              <input type="text" name="name" required value="{{beat.name}}">
+              {{form.name}}
+              <!-- <input type="text" name="name" required value="{{beat.name}}"> -->
             </div>
 
             <div class="form__group">
               <label for="desc">Room Description</label>
-              <input type="text" name="desc" value="{{beat.description}}" placeholder="Description">
+              {{form.description}}
+              <!-- <input type="text" name="desc" value="{{beat.description}}" placeholder="Description"> -->
             </div>
 
             <div class="form__action">
-              <a class="btn btn--dark" href="{{ request.META.HTTP_REFERER }}">Cancel</a>
+              <a class="btn btn--dark" href="{% url 'beat-info' beat.id %}">Cancel</a>
               <input class="btn btn--submit" type="submit" value="Submit">
             </div>
           </form>
