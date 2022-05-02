@@ -1,1 +1,1 @@
-On going social media project..
+On going social media django project..
